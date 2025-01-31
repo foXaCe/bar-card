@@ -19,12 +19,11 @@ import { styles } from './styles';
 
 /* eslint no-console: 0 */
 console.info(
-  `%c  BAR-CARD \n%c  ${localize('common.version')} ${CARD_VERSION}    `,
+  `%c BAR-CARD %c ${CARD_VERSION}`,
   'color: orange; font-weight: bold; background: black',
   'color: white; font-weight: bold; background: dimgray',
 );
 
-// TODO Name your custom element
 @customElement('bar-card')
 export class BarCard extends LitElement {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
@@ -237,9 +236,7 @@ export class BarCard extends LitElement {
             backgroundMargin = '0px';
             break;
           case 'inside':
-            nameInside = html`
-              <bar-card-name>${name}</bar-card-name>
-            `;
+            nameInside = html`<bar-card-name>${name}</bar-card-name>`;
             break;
           case 'off':
             break;
@@ -298,8 +295,8 @@ export class BarCard extends LitElement {
                 class="${config.positions.minmax == 'inside'
                   ? ''
                   : config.direction == 'up'
-                  ? 'value-direction-up'
-                  : 'value-direction-right'}"
+                    ? 'value-direction-up'
+                    : 'value-direction-right'}"
                 >${config.complementary ? config.max - entityState : entityState} ${unitOfMeasurement}</bar-card-value
               >
             `;
@@ -445,9 +442,7 @@ export class BarCard extends LitElement {
 
     const rowArray: TemplateResult[] = [];
     for (const row of perRowArray) {
-      rowArray.push(html`
-        <bar-card-row style="flex-direction: ${rowFlexDirection};">${row}</bar-card-row>
-      `);
+      rowArray.push(html`<bar-card-row style="flex-direction: ${rowFlexDirection};">${row}</bar-card-row>`);
     }
     return rowArray;
   }
@@ -472,13 +467,13 @@ export class BarCard extends LitElement {
     let color: undefined | string;
 
     if (isNaN(numberValue)) {
-      sections.forEach(section => {
+      sections.forEach((section) => {
         if (value == section.text) {
           color = section.color;
         }
       });
     } else {
-      sections.forEach(section => {
+      sections.forEach((section) => {
         if (numberValue >= section.from && numberValue <= section.to) {
           color = section.color;
         }
@@ -496,13 +491,13 @@ export class BarCard extends LitElement {
     let hide = false;
 
     if (isNaN(numberValue)) {
-      sections.forEach(section => {
+      sections.forEach((section) => {
         if (value == section.text) {
           hide = section.hide;
         }
       });
     } else {
-      sections.forEach(section => {
+      sections.forEach((section) => {
         if (numberValue >= section.from && numberValue <= section.to) {
           hide = section.hide;
         }
@@ -520,13 +515,13 @@ export class BarCard extends LitElement {
     if (!sections) return false;
 
     if (isNaN(numberValue)) {
-      sections.forEach(section => {
+      sections.forEach((section) => {
         if (value == section.text) {
           icon = section.icon;
         }
       });
     } else {
-      sections.forEach(section => {
+      sections.forEach((section) => {
         if (numberValue >= section.from && numberValue <= section.to) {
           icon = section.icon;
         }

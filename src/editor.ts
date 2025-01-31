@@ -153,9 +153,7 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
   }
 
   protected render(): TemplateResult | void {
-    return html`
-      ${this._createEntitiesElement()} ${this._createAppearanceElement()}
-    `;
+    return html`${this._createEntitiesElement()} ${this._createAppearanceElement()}`;
   }
 
   private _createActionsElement(index): TemplateResult {
@@ -226,9 +224,7 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
                   .index=${index}
                 ></ha-icon>
               `
-            : html`
-                <ha-icon icon="mdi:arrow-up" style="opacity: 25%;" class="ha-icon-large"></ha-icon>
-              `}
+            : html`<ha-icon icon="mdi:arrow-up" style="opacity: 25%;" class="ha-icon-large"></ha-icon>`}
           ${index !== this._configArray.length - 1
             ? html`
                 <ha-icon
@@ -242,9 +238,7 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
                   .index=${index}
                 ></ha-icon>
               `
-            : html`
-                <ha-icon icon="mdi:arrow-down" style="opacity: 25%;" class="ha-icon-large"></ha-icon>
-              `}
+            : html`<ha-icon icon="mdi:arrow-down" style="opacity: 25%;" class="ha-icon-large"></ha-icon>`}
           <ha-icon
             class="ha-icon-large"
             icon="mdi:close"
@@ -582,11 +576,7 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
         ${options.show
           ? html`
               <div class="card-background" style="overflow: auto; max-height: 420px;">
-                ${arrayLength > 0
-                  ? html`
-                      ${this._createSeverityValues(index)}
-                    `
-                  : ''}
+                ${arrayLength > 0 ? html`${this._createSeverityValues(index)}` : ''}
                 <div class="sub-category" style="display: flex; flex-direction: column; align-items: flex-end;">
                   <ha-fab mini icon="mdi:plus" @click=${this._addSeverity} .index=${index}></ha-fab>
                 </div>
@@ -688,9 +678,7 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
                     .severityIndex=${severityIndex}
                   ></ha-icon>
                 `
-              : html`
-                  <ha-icon icon="mdi:arrow-up" style="opacity: 25%;" class="ha-icon-large"></ha-icon>
-                `}
+              : html`<ha-icon icon="mdi:arrow-up" style="opacity: 25%;" class="ha-icon-large"></ha-icon>`}
             ${severityIndex !== config.severity.length - 1
               ? html`
                   <ha-icon
@@ -702,9 +690,7 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
                     .severityIndex=${severityIndex}
                   ></ha-icon>
                 `
-              : html`
-                  <ha-icon icon="mdi:arrow-down" style="opacity: 25%;" class="ha-icon-large"></ha-icon>
-                `}
+              : html`<ha-icon icon="mdi:arrow-down" style="opacity: 25%;" class="ha-icon-large"></ha-icon>`}
             <ha-icon
               class="ha-icon-large"
               icon="mdi:close"
@@ -890,11 +876,7 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
           </div>
           <div class="secondary">${options.secondary}</div>
         </div>
-        ${options.show
-          ? html`
-              ${this._createPositionsValues(index)}
-            `
-          : ``}
+        ${options.show ? html`${this._createPositionsValues(index)}` : ``}
       </div>
     `;
   }
@@ -1325,12 +1307,12 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
     `;
   }
 }
-// @ts-ignore
+// @ts-expect-error we know that customCards exists
 window.customCards = window.customCards || [];
-// @ts-ignore
+// @ts-expect-error we know that customCards exists
 window.customCards.push({
   type: 'bar-card',
-  name: 'Bar Card',
+  name: 'Bar Card Unofficial',
   preview: false, // Optional - defaults to false
   description: 'A customizable bar card.', // Optional
 });

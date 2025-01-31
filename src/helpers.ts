@@ -13,7 +13,7 @@ export function mergeDeep(...objects: any): any {
   const isObject = (obj: any) => obj && typeof obj === 'object';
 
   return objects.reduce((prev: any, obj: any) => {
-    Object.keys(obj).forEach(key => {
+    Object.keys(obj).forEach((key) => {
       const pVal = prev[key];
       const oVal = obj[key];
 

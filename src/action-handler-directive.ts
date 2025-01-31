@@ -1,8 +1,9 @@
 import { directive, PropertyPart } from 'lit-html';
 import { fireEvent, ActionHandlerOptions } from 'custom-card-helpers';
 
-const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.maxTouchPoints > 0;
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 interface ActionHandler extends HTMLElement {
   holdTime: number;
   bind(element: Element, options): void;
@@ -11,9 +12,9 @@ interface ActionHandlerElement extends Element {
   actionHandler?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class ActionHandler extends HTMLElement implements ActionHandler {
   public holdTime: number;
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   public ripple: any;
   protected timer: number | undefined;
   protected held: boolean;
@@ -43,7 +44,7 @@ class ActionHandler extends HTMLElement implements ActionHandler {
     this.appendChild(this.ripple);
     this.ripple.primary = true;
 
-    ['touchcancel', 'mouseout', 'mouseup', 'touchmove', 'mousewheel', 'wheel', 'scroll'].forEach(ev => {
+    ['touchcancel', 'mouseout', 'mouseup', 'touchmove', 'mousewheel', 'wheel', 'scroll'].forEach((ev) => {
       document.addEventListener(
         ev,
         () => {
