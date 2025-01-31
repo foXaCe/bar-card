@@ -46,6 +46,8 @@ export function hasConfigOrEntitiesChanged(element: any, changedProps: PropertyV
       if (oldHass) {
         if (oldHass.states[config.entity] !== element.hass!.states[config.entity]) {
           return true;
+        } else if (isNaN(config.target) && oldHass.states[config.target] !== element.hass!.states[config.target]) {
+          return true;
         } else {
           continue;
         }
@@ -102,4 +104,14 @@ export function arrayMove(arr, fromIndex, toIndex): any[] {
   newArray.splice(fromIndex, 1);
   newArray.splice(toIndex, 0, element);
   return newArray;
+}
+
+export function getStateValueBasedOnType(hass: HomeAssistant | undefined, value: number | string): number {
+  if (typeof value === 'number') {
+    return value;
+  }
+  if (hass === undefined || !hass.states[value]) {
+    return NaN;
+  }
+  return Number(hass.states[value].state);
 }

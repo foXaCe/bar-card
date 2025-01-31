@@ -24,7 +24,7 @@ export interface BarCardConfig {
   severity: any;
   stack: string;
   tap_action?: ActionConfig;
-  target: any;
+  target: string | number;
   title: string;
   type: string;
   unit_of_measurement: string;

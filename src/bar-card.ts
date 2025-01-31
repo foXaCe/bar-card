@@ -14,7 +14,7 @@ import { BarCardConfig } from './types';
 import { actionHandler } from './action-handler-directive';
 import { CARD_VERSION } from './const';
 import { localize } from './localize/localize';
-import { mergeDeep, hasConfigOrEntitiesChanged, createConfigArray } from './helpers';
+import { mergeDeep, hasConfigOrEntitiesChanged, createConfigArray, getStateValueBasedOnType } from './helpers';
 import { styles } from './styles';
 
 /* eslint no-console: 0 */
@@ -350,9 +350,19 @@ export class BarCard extends LitElement {
 
         // Set bar percent and marker percent based on value difference.
         const barPercent = this._computePercent(entityState, index);
-        const targetMarkerPercent = this._computePercent(config.target, index);
+        const targetState = getStateValueBasedOnType(this.hass, config.target);
+        if (config.target !== undefined && isNaN(targetState)) {
+          currentRowArray.push(html`
+            <div class="warning" style="margin-bottom: 8px;">
+              ${localize('common.entity_not_available')}: ${config.target}
+            </div>
+          `);
+          continue;
+        }
+
+        const targetMarkerPercent = this._computePercent(targetState.toString(), index);
         let targetStartPercent = barPercent;
-        let targetEndPercent = this._computePercent(config.target, index);
+        let targetEndPercent = this._computePercent(targetState.toString(), index);
         if (targetEndPercent < targetStartPercent) {
           targetStartPercent = targetEndPercent;
           targetEndPercent = barPercent;
