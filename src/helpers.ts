@@ -48,6 +48,10 @@ export function hasConfigOrEntitiesChanged(element: any, changedProps: PropertyV
           return true;
         } else if (isNaN(config.target) && oldHass.states[config.target] !== element.hass!.states[config.target]) {
           return true;
+        } else if (isNaN(config.min) && oldHass.states[config.min] !== element.hass!.states[config.min]) {
+          return true;
+        } else if (isNaN(config.max) && oldHass.states[config.max] !== element.hass!.states[config.max]) {
+          return true;
         } else {
           continue;
         }
@@ -106,7 +110,10 @@ export function arrayMove(arr, fromIndex, toIndex): any[] {
   return newArray;
 }
 
-export function getStateValueBasedOnType(hass: HomeAssistant | undefined, value: number | string): number {
+export function getStateValueBasedOnType(hass: HomeAssistant | undefined, value: number | string | undefined): number {
+  if (value === undefined) {
+    return NaN;
+  }
   if (typeof value === 'number') {
     return value;
   }

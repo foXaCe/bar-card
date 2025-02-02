@@ -147,9 +147,11 @@ export class BarCard extends LitElement {
         }
 
         // If limit_value is defined limit the displayed value to min and max.
+        const max = getStateValueBasedOnType(this.hass, config.max);
+        const min = getStateValueBasedOnType(this.hass, config.min);
         if (config.limit_value) {
-          entityState = Math.min(entityState, config.max);
-          entityState = Math.max(entityState, config.min);
+          entityState = Math.min(entityState, max);
+          entityState = Math.max(entityState, min);
         }
 
         // If decimal is defined check if NaN and apply number fix.
@@ -260,18 +262,18 @@ export class BarCard extends LitElement {
         switch (config.positions.minmax) {
           case 'outside':
             minMaxOutside = html`
-              <bar-card-min>${config.min}${unitOfMeasurement}</bar-card-min>
+              <bar-card-min>${min}${unitOfMeasurement}</bar-card-min>
               <bar-card-divider>/</bar-card-divider>
-              <bar-card-max>${config.max}${unitOfMeasurement}</bar-card-max>
+              <bar-card-max>${max}${unitOfMeasurement}</bar-card-max>
             `;
             break;
           case 'inside':
             minMaxInside = html`
               <bar-card-min class="${config.direction == 'up' ? 'min-direction-up' : 'min-direction-right'}"
-                >${config.min}${unitOfMeasurement}</bar-card-min
+                >${min}${unitOfMeasurement}</bar-card-min
               >
               <bar-card-divider>/</bar-card-divider>
-              <bar-card-max> ${config.max}${unitOfMeasurement}</bar-card-max>
+              <bar-card-max> ${max}${unitOfMeasurement}</bar-card-max>
             `;
             break;
           case 'off':
@@ -285,7 +287,7 @@ export class BarCard extends LitElement {
           case 'outside':
             valueOutside = html`
               <bar-card-value class="${config.direction == 'up' ? 'value-direction-up' : 'value-direction-right'}"
-                >${config.complementary ? config.max - entityState : entityState} ${unitOfMeasurement}</bar-card-value
+                >${config.complementary ? max - entityState : entityState} ${unitOfMeasurement}</bar-card-value
               >
             `;
             break;
@@ -297,7 +299,7 @@ export class BarCard extends LitElement {
                   : config.direction == 'up'
                     ? 'value-direction-up'
                     : 'value-direction-right'}"
-                >${config.complementary ? config.max - entityState : entityState} ${unitOfMeasurement}</bar-card-value
+                >${config.complementary ? max - entityState : entityState} ${unitOfMeasurement}</bar-card-value
               >
             `;
             break;
@@ -349,7 +351,7 @@ export class BarCard extends LitElement {
         }
 
         // Set bar percent and marker percent based on value difference.
-        const barPercent = this._computePercent(entityState, index);
+        const barPercent = this._computePercent(entityState, index, min, max);
         const targetState = getStateValueBasedOnType(this.hass, config.target);
         if (config.target !== undefined && isNaN(targetState)) {
           currentRowArray.push(html`
@@ -360,9 +362,9 @@ export class BarCard extends LitElement {
           continue;
         }
 
-        const targetMarkerPercent = this._computePercent(targetState.toString(), index);
+        const targetMarkerPercent = this._computePercent(targetState.toString(), index, min, max);
         let targetStartPercent = barPercent;
-        let targetEndPercent = this._computePercent(targetState.toString(), index);
+        let targetEndPercent = this._computePercent(targetState.toString(), index, min, max);
         if (targetEndPercent < targetStartPercent) {
           targetStartPercent = targetEndPercent;
           targetEndPercent = barPercent;
@@ -540,7 +542,7 @@ export class BarCard extends LitElement {
     return icon;
   }
 
-  private _computePercent(value: string, index: number): number {
+  private _computePercent(value: string, index: number, min: number, max: number): number {
     const config = this._configArray[index];
     const numberValue = Number(value);
 
@@ -552,9 +554,9 @@ export class BarCard extends LitElement {
       case 'left-reverse':
       case 'up-reverse':
       case 'down-reverse':
-        return 100 - (100 * (numberValue - config.min)) / (config.max - config.min);
+        return 100 - (100 * (numberValue - min)) / (max - min);
       default:
-        return (100 * (numberValue - config.min)) / (config.max - config.min);
+        return (100 * (numberValue - min)) / (max - min);
     }
   }
 

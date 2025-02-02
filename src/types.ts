@@ -17,14 +17,14 @@ export interface BarCardConfig {
   hold_action?: ActionConfig;
   icon: any;
   limit_value: boolean;
-  max: number;
-  min: number;
+  max: number | string;
+  min: number | string;
   name: string;
   positions: any;
   severity: any;
   stack: string;
   tap_action?: ActionConfig;
-  target: string | number;
+  target?: string | number;
   title: string;
   type: string;
   unit_of_measurement: string;
