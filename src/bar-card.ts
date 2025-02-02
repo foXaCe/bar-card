@@ -47,7 +47,7 @@ export class BarCard extends LitElement {
 
   public setConfig(config: BarCardConfig): void {
     if (!config) {
-      throw new Error(localize('common.invalid_configuration'));
+      throw new Error(localize(this.hass, 'common.invalid_configuration'));
     }
 
     this._config = mergeDeep(
@@ -125,7 +125,7 @@ export class BarCard extends LitElement {
         if (!state) {
           currentRowArray.push(html`
             <div class="warning" style="margin-bottom: 8px;">
-              ${localize('common.entity_not_available')}: ${config.entity}
+              ${localize(this.hass, 'common.entity_not_available')}: ${config.entity}
             </div>
           `);
           continue;
@@ -367,7 +367,7 @@ export class BarCard extends LitElement {
         if (config.target !== undefined && isNaN(targetState)) {
           currentRowArray.push(html`
             <div class="warning" style="margin-bottom: 8px;">
-              ${localize('common.entity_not_available')}: ${config.target}
+              ${localize(this.hass, 'common.entity_not_available')}: ${config.target}
             </div>
           `);
           continue;

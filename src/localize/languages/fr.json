@@ -1,0 +1,9 @@
+{
+    "common": {
+      "version": "Version",
+      "invalid_configuration": "Configuration invalide",
+      "show_warning": "Afficher les Warning",
+      "entity_not_available": "Entité indisponible"
+    }
+  }
+  
