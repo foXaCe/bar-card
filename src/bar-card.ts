@@ -221,7 +221,18 @@ export class BarCard extends LitElement {
         }
 
         // Check for configured name otherwise use friendly name.
-        const name = config.name ? config.name : state.attributes.friendly_name;
+        let name;
+        if (!config.name) {
+          name = state.attributes.friendly_name;
+        } else if (this.hass?.states[config.name]) {
+          const entity = this.hass.states[config.name];
+          name = entity.state;
+          if (entity.attributes.state_class === 'measurement') {
+            name += ' ' + entity.attributes.unit_of_measurement;
+          }
+        } else {
+          name = config.name;
+        }
 
         // Set name html based on position.
         let nameOutside;

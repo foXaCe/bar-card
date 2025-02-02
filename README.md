@@ -37,7 +37,7 @@
 | limit_value | boolean | false | Limits value displayed to `min` and `max` value.
 | max | number or string | 100 | Defines maximum value of the bar using a number or a entity.
 | min | number or string | 0 | Defines minimum value of the bar using a number or a entity.
-| name | string | none | Defines custom entity name.
+| name | string | none | Defines custom entity name, static or entity.
 | positions | object | none | Defines the positions of the card elements. See [Positions Options](#positions-options).
 | severity | object | none | A list of severity values. See [Severity Options](#severity-options).
 | tap_action | object | none | See [home assistant documentation](https://www.home-assistant.io/lovelace/actions/).
