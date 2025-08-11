@@ -168,12 +168,12 @@ export const styles = html`
     }
     bar-card-indicator {
       align-self: center;
-      color: var(--bar-color);
-      filter: brightness(0.75);
+      color: var(--primary-text-color);
       height: 16px;
       width: 16px;
       position: relative;
       text-align: center;
+      z-index: 1;
     }
     .indicator-direction-right {
       margin-right: -16px;
