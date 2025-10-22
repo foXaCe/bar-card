@@ -491,7 +491,9 @@ export class BarCard extends LitElement {
       });
     } else {
       sections.forEach((section) => {
-        if (numberValue >= section.from && numberValue <= section.to) {
+        const from = getStateValueBasedOnType(this.hass, section.from);
+        const to = getStateValueBasedOnType(this.hass, section.to);
+        if (numberValue >= from && numberValue <= to) {
           color = section.color;
         }
       });
@@ -515,7 +517,9 @@ export class BarCard extends LitElement {
       });
     } else {
       sections.forEach((section) => {
-        if (numberValue >= section.from && numberValue <= section.to) {
+        const from = getStateValueBasedOnType(this.hass, section.from);
+        const to = getStateValueBasedOnType(this.hass, section.to);
+        if (numberValue >= from && numberValue <= to) {
           hide = section.hide;
         }
       });
@@ -539,7 +543,9 @@ export class BarCard extends LitElement {
       });
     } else {
       sections.forEach((section) => {
-        if (numberValue >= section.from && numberValue <= section.to) {
+        const from = getStateValueBasedOnType(this.hass, section.from);
+        const to = getStateValueBasedOnType(this.hass, section.to);
+        if (numberValue >= from && numberValue <= to) {
           icon = section.icon;
         }
       });

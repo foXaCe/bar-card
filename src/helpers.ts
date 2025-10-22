@@ -52,6 +52,17 @@ export function hasConfigOrEntitiesChanged(element: any, changedProps: PropertyV
           return true;
         } else if (isNaN(config.max) && oldHass.states[config.max] !== element.hass!.states[config.max]) {
           return true;
+        } else if (config.severity) {
+          // Check if any severity from/to entity has changed
+          for (const section of config.severity) {
+            if (isNaN(section.from) && oldHass.states[section.from] !== element.hass!.states[section.from]) {
+              return true;
+            }
+            if (isNaN(section.to) && oldHass.states[section.to] !== element.hass!.states[section.to]) {
+              return true;
+            }
+          }
+          continue;
         } else {
           continue;
         }
