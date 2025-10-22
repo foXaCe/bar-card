@@ -17,17 +17,17 @@ export function localize(hass: HomeAssistant | undefined, string: string, search
   const section = string.split('.')[0];
   const key = string.split('.')[1];
 
-  let tranlated: string;
+  let translated: string;
 
   try {
-    tranlated = languages[lang][section][key];
-    if (tranlated === undefined) tranlated = languages['en'][section][key];
+    translated = languages[lang][section][key];
+    if (translated === undefined) translated = languages['en'][section][key];
   } catch {
-    tranlated = languages['en'][section][key];
+    translated = languages['en'][section][key];
   }
 
   if (search !== '' && replace !== '') {
-    tranlated = tranlated.replace(search, replace);
+    translated = translated.replace(search, replace);
   }
-  return tranlated;
+  return translated;
 }

@@ -1,4 +1,4 @@
-import { directive, PropertyPart } from 'lit-html';
+import { directive, Directive, PartInfo, DirectiveParameters, ElementPart } from 'lit/directive.js';
 import { fireEvent, ActionHandlerOptions } from 'custom-card-helpers';
 
 const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.maxTouchPoints > 0;
@@ -187,6 +187,22 @@ export const actionHandlerBind = (element: ActionHandlerElement, options: Action
   actionhandler.bind(element, options);
 };
 
-export const actionHandler = directive((options: ActionHandlerOptions = {}) => (part: PropertyPart): void => {
-  actionHandlerBind(part.committer.element, options);
-});
+class ActionHandlerDirective extends Directive {
+  private options: ActionHandlerOptions;
+
+  constructor(partInfo: PartInfo) {
+    super(partInfo);
+    this.options = {};
+  }
+
+  render(options: ActionHandlerOptions = {}): void {
+    this.options = options;
+  }
+
+  update(part: ElementPart, [options]: DirectiveParameters<this>): void {
+    actionHandlerBind(part.element as ActionHandlerElement, options || {});
+    this.render(options);
+  }
+}
+
+export const actionHandler = directive(ActionHandlerDirective);

@@ -1,4 +1,6 @@
-import { LitElement, html, customElement, property, TemplateResult, PropertyValues } from 'lit-element';
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import type { TemplateResult, PropertyValues } from 'lit';
 import {
   HomeAssistant,
   hasAction,
@@ -12,17 +14,9 @@ import './editor';
 
 import { BarCardConfig } from './types';
 import { actionHandler } from './action-handler-directive';
-import { CARD_VERSION } from './const';
 import { localize } from './localize/localize';
 import { mergeDeep, hasConfigOrEntitiesChanged, createConfigArray, getStateValueBasedOnType } from './helpers';
 import { styles } from './styles';
-
-/* eslint no-console: 0 */
-console.info(
-  `%c BAR-CARD %c ${CARD_VERSION}`,
-  'color: orange; font-weight: bold; background: black',
-  'color: white; font-weight: bold; background: dimgray',
-);
 
 @customElement('bar-card')
 export class BarCard extends LitElement {

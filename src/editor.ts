@@ -1,5 +1,7 @@
-import { LitElement, html, customElement, property, TemplateResult, CSSResult, css, PropertyValues } from 'lit-element';
-import { HomeAssistant, fireEvent, LovelaceCardEditor, ActionConfig } from 'custom-card-helpers';
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import type { TemplateResult, CSSResult, PropertyValues } from 'lit';
+import { HomeAssistant, fireEvent, LovelaceCardEditor } from 'custom-card-helpers';
 
 import { BarCardConfig } from './types';
 import { createEditorConfigArray, arrayMove, hasConfigOrEntitiesChanged } from './helpers';
@@ -120,7 +122,7 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
       },
     };
 
-    for (const config of this._configArray) {
+    for (let i = 0; i < this._configArray.length; i++) {
       this._entityOptionsArray.push({ ...entityOptions });
     }
     if (!this._options) {
@@ -177,10 +179,9 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
     }
 
     const options = this._options.entities;
-    const entities = Object.keys(this.hass.states);
     const valueElementArray: TemplateResult[] = [];
-    for (const config of this._configArray) {
-      const index = this._configArray.indexOf(config);
+    for (let index = 0; index < this._configArray.length; index++) {
+      const config = this._configArray[index];
       valueElementArray.push(html`
         <div class="sub-category" style="display: flex; flex-direction: row; align-items: center;">
           <div style="display: flex; align-items: center; flex-direction: column;">
@@ -710,7 +711,6 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
       return html``;
     }
     const config: any = this._config;
-    const index = null;
     const options = this._options.appearance.options.card;
     return html`
       <div class="category" id="card">
@@ -853,13 +853,10 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
     }
 
     let options;
-    let config;
     if (index === null) {
       options = this._options.appearance.options.positions;
-      config = this._config;
     } else {
       options = this._options.entities.options.entities[index].options.positions;
-      config = this._configArray[index];
     }
     return html`
       <div class="category">
@@ -1072,12 +1069,10 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
     }
     const target = ev.target;
     const entitiesArray: BarCardConfig[] = [];
-    let index = 0;
-    for (const config of this._configArray) {
+    for (let index = 0; index < this._configArray.length; index++) {
       if (target.configIndex !== index) {
-        entitiesArray.push(config);
+        entitiesArray.push(this._configArray[index]);
       }
-      index++;
     }
     const newConfig = { [target.configArray]: entitiesArray };
     this._config = Object.assign(this._config, newConfig);
@@ -1158,12 +1153,10 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
 
     const clonedArray = severityArray.slice();
     const newArray: any = [];
-    let arrayIndex = 0;
-    for (const config of clonedArray) {
+    for (let arrayIndex = 0; arrayIndex < clonedArray.length; arrayIndex++) {
       if (target.severityIndex !== arrayIndex) {
         newArray.push(clonedArray[arrayIndex]);
       }
-      arrayIndex++;
     }
     if (target.index === null) {
       if (newArray.length === 0) {
@@ -1234,7 +1227,6 @@ export class BarCardEditor extends LitElement implements LovelaceCardEditor {
         if (target.ignoreNull == true) return;
         delete target.configObject[target.configAttribute];
       } else {
-        console.log(target.configObject);
         target.configObject[target.configAttribute] = target.value;
       }
     }
